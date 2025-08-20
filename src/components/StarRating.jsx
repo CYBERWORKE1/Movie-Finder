@@ -1,15 +1,8 @@
 import React from 'react';
 import { Star } from 'lucide-react';
 
-interface StarRatingProps {
-  rating: number;
-  onRatingChange?: (rating: number) => void;
-  readonly?: boolean;
-  size?: 'sm' | 'md' | 'lg';
-}
-
-export function StarRating({ rating, onRatingChange, readonly = false, size = 'md' }: StarRatingProps) {
-  const [hoveredRating, setHoveredRating] = React.useState<number | null>(null);
+export function StarRating({ rating, onRatingChange, readonly = false, size = 'md' }) {
+  const [hoveredRating, setHoveredRating] = React.useState(null);
   
   const sizeClasses = {
     sm: 'w-4 h-4',
@@ -17,7 +10,7 @@ export function StarRating({ rating, onRatingChange, readonly = false, size = 'm
     lg: 'w-6 h-6'
   };
 
-  const handleClick = (value: number) => {
+  const handleClick = (value) => {
     if (!readonly && onRatingChange) {
       onRatingChange(value);
     }

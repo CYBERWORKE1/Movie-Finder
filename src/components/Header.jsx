@@ -1,14 +1,7 @@
 import React from 'react';
 import { Film, Heart, Star } from 'lucide-react';
 
-interface HeaderProps {
-  activeTab: 'search' | 'favorites' | 'rated';
-  onTabChange: (tab: 'search' | 'favorites' | 'rated') => void;
-  favoritesCount: number;
-  ratedCount: number;
-}
-
-export function Header({ activeTab, onTabChange, favoritesCount, ratedCount }: HeaderProps) {
+export function Header({ activeTab, onTabChange, favoritesCount, ratedCount }) {
   return (
     <header className="bg-gray-900/80 backdrop-blur-lg border-b border-gray-700/50 sticky top-0 z-40">
       <div className="container mx-auto px-4 py-4">
@@ -25,7 +18,6 @@ export function Header({ activeTab, onTabChange, favoritesCount, ratedCount }: H
               >
                 DEXTERMANIA
               </h1>
-
               <p className="text-xs text-gray-400">Discover • Rate • Share</p>
             </div>
           </div>

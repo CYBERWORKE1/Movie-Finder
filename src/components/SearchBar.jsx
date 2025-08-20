@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
 
-interface SearchBarProps {
-  onSearch: (query: string) => void;
-  isLoading?: boolean;
-}
-
-export function SearchBar({ onSearch, isLoading }: SearchBarProps) {
+export function SearchBar({ onSearch, isLoading }) {
   const [query, setQuery] = useState('');
 
   useEffect(() => {

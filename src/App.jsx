@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Movie, UserRating, FavoriteMovie, MovieComment } from './types/Movie';
 import { searchMovies, getPopularMovies } from './services/tmdbApi';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { Header } from './components/Header';
@@ -7,19 +6,17 @@ import { SearchBar } from './components/SearchBar';
 import { MovieGrid } from './components/MovieGrid';
 import { MovieModal } from './components/MovieModal';
 
-type ActiveTab = 'search' | 'favorites' | 'rated';
-
 function App() {
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
+  const [movies, setMovies] = useState([]);
+  const [selectedMovie, setSelectedMovie] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState<ActiveTab>('search');
+  const [activeTab, setActiveTab] = useState('search');
   
   // Local storage hooks
-  const [userRatings, setUserRatings] = useLocalStorage<UserRating[]>('movieRatings', []);
-  const [favorites, setFavorites] = useLocalStorage<FavoriteMovie[]>('movieFavorites', []);
-  const [comments, setComments] = useLocalStorage<MovieComment[]>('movieComments', []);
+  const [userRatings, setUserRatings] = useLocalStorage('movieRatings', []);
+  const [favorites, setFavorites] = useLocalStorage('movieFavorites', []);
+  const [comments, setComments] = useLocalStorage('movieComments', []);
 
   // Load popular movies on initial load
   useEffect(() => {
@@ -67,7 +64,7 @@ function App() {
     }
   }, [activeTab, favorites, userRatings]);
 
-  const handleSearch = useCallback(async (query: string) => {
+  const handleSearch = useCallback(async (query) => {
     if (activeTab !== 'search') return;
     
     setIsLoading(true);
@@ -79,12 +76,12 @@ function App() {
     }
   }, [activeTab]);
 
-  const handleMovieClick = (movie: Movie) => {
+  const handleMovieClick = (movie) => {
     setSelectedMovie(movie);
     setIsModalOpen(true);
   };
 
-  const handleRatingChange = (movieId: number, rating: number) => {
+  const handleRatingChange = (movieId, rating) => {
     setUserRatings(prev => {
       const existingRatingIndex = prev.findIndex(r => r.movieId === movieId);
       if (existingRatingIndex >= 0) {
@@ -97,7 +94,7 @@ function App() {
     });
   };
 
-  const handleToggleFavorite = (movieId: number) => {
+  const handleToggleFavorite = (movieId) => {
     setFavorites(prev => {
       const existingIndex = prev.findIndex(f => f.movieId === movieId);
       if (existingIndex >= 0) {
@@ -108,8 +105,8 @@ function App() {
     });
   };
 
-  const handleAddComment = (movieId: number, text: string) => {
-    const newComment: MovieComment = {
+  const handleAddComment = (movieId, text) => {
+    const newComment = {
       id: Date.now().toString(),
       movieId,
       text,
@@ -119,7 +116,7 @@ function App() {
     setComments(prev => [newComment, ...prev]);
   };
 
-  const handleDeleteComment = (commentId: string) => {
+  const handleDeleteComment = (commentId) => {
     setComments(prev => prev.filter(c => c.id !== commentId));
   };
 

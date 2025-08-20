@@ -1,16 +1,5 @@
 import React from 'react';
-import { Movie, UserRating, FavoriteMovie, MovieComment } from '../types/Movie';
 import { MovieCard } from './MovieCard';
-
-interface MovieGridProps {
-  movies: Movie[];
-  userRatings: UserRating[];
-  favorites: FavoriteMovie[];
-  comments: MovieComment[];
-  onMovieClick: (movie: Movie) => void;
-  onRatingChange: (movieId: number, rating: number) => void;
-  onToggleFavorite: (movieId: number) => void;
-}
 
 export function MovieGrid({ 
   movies, 
@@ -20,7 +9,7 @@ export function MovieGrid({
   onMovieClick, 
   onRatingChange, 
   onToggleFavorite 
-}: MovieGridProps) {
+}) {
   if (movies.length === 0) {
     return (
       <div className="text-center py-12">

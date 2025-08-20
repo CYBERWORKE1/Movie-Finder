@@ -1,18 +1,7 @@
 import React from 'react';
 import { Heart, MessageCircle } from 'lucide-react';
-import { Movie } from '../types/Movie';
 import { StarRating } from './StarRating';
 import { getImageUrl } from '../services/tmdbApi';
-
-interface MovieCardProps {
-  movie: Movie;
-  userRating?: number;
-  isFavorite?: boolean;
-  commentsCount?: number;
-  onMovieClick: (movie: Movie) => void;
-  onRatingChange: (movieId: number, rating: number) => void;
-  onToggleFavorite: (movieId: number) => void;
-}
 
 export function MovieCard({ 
   movie, 
@@ -22,7 +11,7 @@ export function MovieCard({
   onMovieClick,
   onRatingChange,
   onToggleFavorite 
-}: MovieCardProps) {
+}) {
   return (
     <div className="group relative bg-gray-900/30 backdrop-blur-lg border border-gray-700/50 rounded-2xl overflow-hidden 
                   hover:border-purple-500/50 transition-all duration-300 hover:scale-105">
@@ -33,7 +22,7 @@ export function MovieCard({
           alt={movie.title}
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
           onError={(e) => {
-            (e.target as HTMLImageElement).src = 'https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=400';
+            e.target.src = 'https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=400';
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 

@@ -1,19 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Calendar, Star, MessageCircle, Send, Trash2 } from 'lucide-react';
-import { Movie, MovieImages, MovieComment } from '../types/Movie';
 import { StarRating } from './StarRating';
 import { getImageUrl, getMovieImages } from '../services/tmdbApi';
-
-interface MovieModalProps {
-  movie: Movie | null;
-  isOpen: boolean;
-  userRating: number;
-  comments: MovieComment[];
-  onClose: () => void;
-  onRatingChange: (movieId: number, rating: number) => void;
-  onAddComment: (movieId: number, comment: string) => void;
-  onDeleteComment: (commentId: string) => void;
-}
 
 export function MovieModal({ 
   movie, 
@@ -24,11 +12,11 @@ export function MovieModal({
   onRatingChange,
   onAddComment,
   onDeleteComment
-}: MovieModalProps) {
-  const [images, setImages] = useState<MovieImages>({ backdrops: [], posters: [] });
+}) {
+  const [images, setImages] = useState({ backdrops: [], posters: [] });
   const [isLoadingImages, setIsLoadingImages] = useState(false);
   const [newComment, setNewComment] = useState('');
-  const [activeImageTab, setActiveImageTab] = useState<'backdrops' | 'posters'>('backdrops');
+  const [activeImageTab, setActiveImageTab] = useState('backdrops');
 
   useEffect(() => {
     if (movie && isOpen) {
@@ -40,7 +28,7 @@ export function MovieModal({
     }
   }, [movie, isOpen]);
 
-  const handleAddComment = (e: React.FormEvent) => {
+  const handleAddComment = (e) => {
     e.preventDefault();
     if (newComment.trim() && movie) {
       onAddComment(movie.id, newComment.trim());
